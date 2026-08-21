@@ -10,33 +10,44 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiPublicHooksFlushEmailsRouteImport } from './routes/api/public/hooks/flush-emails'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicHooksFlushEmailsRoute =
+  ApiPublicHooksFlushEmailsRouteImport.update({
+    id: '/api/public/hooks/flush-emails',
+    path: '/api/public/hooks/flush-emails',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/public/hooks/flush-emails': typeof ApiPublicHooksFlushEmailsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/public/hooks/flush-emails': typeof ApiPublicHooksFlushEmailsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/public/hooks/flush-emails': typeof ApiPublicHooksFlushEmailsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/api/public/hooks/flush-emails'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/api/public/hooks/flush-emails'
+  id: '__root__' | '/' | '/api/public/hooks/flush-emails'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiPublicHooksFlushEmailsRoute: typeof ApiPublicHooksFlushEmailsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +59,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/hooks/flush-emails': {
+      id: '/api/public/hooks/flush-emails'
+      path: '/api/public/hooks/flush-emails'
+      fullPath: '/api/public/hooks/flush-emails'
+      preLoaderRoute: typeof ApiPublicHooksFlushEmailsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiPublicHooksFlushEmailsRoute: ApiPublicHooksFlushEmailsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
