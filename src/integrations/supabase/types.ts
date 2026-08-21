@@ -439,6 +439,46 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      cancel_booking: { Args: { p_booking_id: string }; Returns: number }
+      claim_offer: {
+        Args: { p_token: string }
+        Returns: {
+          event_id: string
+          expires_at: string
+          seat_id: string
+        }[]
+      }
+      confirm_booking: {
+        Args: {
+          p_email: string
+          p_event_id: string
+          p_name: string
+          p_seat_ids: string[]
+        }
+        Returns: {
+          cancelled_at: string | null
+          created_at: string
+          customer_email: string
+          customer_name: string
+          event_id: string
+          id: string
+          reference: string
+          status: Database["public"]["Enums"]["booking_status"]
+          total: number
+          user_id: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "bookings"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      create_show_seats: { Args: { p_event_id: string }; Returns: number }
+      ensure_profile: {
+        Args: { p_full_name: string; p_role: string }
+        Returns: undefined
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -446,6 +486,41 @@ export type Database = {
         }
         Returns: boolean
       }
+      hold_seats: {
+        Args: { p_event_id: string; p_seat_ids: string[] }
+        Returns: {
+          hold_expires_at: string
+          seat_id: string
+        }[]
+      }
+      join_waitlist: {
+        Args: { p_category: string; p_event_id: string }
+        Returns: {
+          category: string
+          email: string
+          event_id: string
+          id: string
+          joined_at: string
+          offer_expires_at: string | null
+          offer_token: string | null
+          offer_ttl_seconds: number
+          offered_seat_id: string | null
+          seats_wanted: number
+          status: Database["public"]["Enums"]["waitlist_status"]
+          updated_at: string
+          user_id: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "waitlist"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      leave_waitlist: { Args: { p_id: string }; Returns: undefined }
+      offer_seat_to_next: { Args: { p_seat_id: string }; Returns: string }
+      release_my_holds: { Args: { p_event_id: string }; Returns: number }
+      sweep_expirations: { Args: never; Returns: Json }
     }
     Enums: {
       app_role: "customer" | "organiser" | "admin"
