@@ -10,8 +10,11 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BookingsRouteImport } from './routes/bookings'
+import { Route as MailboxRouteImport } from './routes/mailbox'
+import { Route as OrganiserRouteImport } from './routes/organiser'
 import { Route as ClaimTokenRouteImport } from './routes/claim.$token'
 import { Route as EventsEventIdRouteImport } from './routes/events.$eventId'
 import { Route as ApiPublicHooksFlushEmailsRouteImport } from './routes/api/public/hooks/flush-emails'
@@ -19,6 +22,11 @@ import { Route as ApiPublicHooksFlushEmailsRouteImport } from './routes/api/publ
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -29,6 +37,16 @@ const AuthRoute = AuthRouteImport.update({
 const BookingsRoute = BookingsRouteImport.update({
   id: '/bookings',
   path: '/bookings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MailboxRoute = MailboxRouteImport.update({
+  id: '/mailbox',
+  path: '/mailbox',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrganiserRoute = OrganiserRouteImport.update({
+  id: '/organiser',
+  path: '/organiser',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ClaimTokenRoute = ClaimTokenRouteImport.update({
@@ -50,16 +68,22 @@ const ApiPublicHooksFlushEmailsRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/bookings': typeof BookingsRoute
+  '/mailbox': typeof MailboxRoute
+  '/organiser': typeof OrganiserRoute
   '/claim/$token': typeof ClaimTokenRoute
   '/events/$eventId': typeof EventsEventIdRoute
   '/api/public/hooks/flush-emails': typeof ApiPublicHooksFlushEmailsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/bookings': typeof BookingsRoute
+  '/mailbox': typeof MailboxRoute
+  '/organiser': typeof OrganiserRoute
   '/claim/$token': typeof ClaimTokenRoute
   '/events/$eventId': typeof EventsEventIdRoute
   '/api/public/hooks/flush-emails': typeof ApiPublicHooksFlushEmailsRoute
@@ -67,8 +91,11 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/bookings': typeof BookingsRoute
+  '/mailbox': typeof MailboxRoute
+  '/organiser': typeof OrganiserRoute
   '/claim/$token': typeof ClaimTokenRoute
   '/events/$eventId': typeof EventsEventIdRoute
   '/api/public/hooks/flush-emails': typeof ApiPublicHooksFlushEmailsRoute
@@ -77,24 +104,33 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/auth'
     | '/bookings'
+    | '/mailbox'
+    | '/organiser'
     | '/claim/$token'
     | '/events/$eventId'
     | '/api/public/hooks/flush-emails'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin'
     | '/auth'
     | '/bookings'
+    | '/mailbox'
+    | '/organiser'
     | '/claim/$token'
     | '/events/$eventId'
     | '/api/public/hooks/flush-emails'
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/auth'
     | '/bookings'
+    | '/mailbox'
+    | '/organiser'
     | '/claim/$token'
     | '/events/$eventId'
     | '/api/public/hooks/flush-emails'
@@ -102,8 +138,11 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
   AuthRoute: typeof AuthRoute
   BookingsRoute: typeof BookingsRoute
+  MailboxRoute: typeof MailboxRoute
+  OrganiserRoute: typeof OrganiserRoute
   ClaimTokenRoute: typeof ClaimTokenRoute
   EventsEventIdRoute: typeof EventsEventIdRoute
   ApiPublicHooksFlushEmailsRoute: typeof ApiPublicHooksFlushEmailsRoute
@@ -118,6 +157,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -130,6 +176,20 @@ declare module '@tanstack/react-router' {
       path: '/bookings'
       fullPath: '/bookings'
       preLoaderRoute: typeof BookingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mailbox': {
+      id: '/mailbox'
+      path: '/mailbox'
+      fullPath: '/mailbox'
+      preLoaderRoute: typeof MailboxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/organiser': {
+      id: '/organiser'
+      path: '/organiser'
+      fullPath: '/organiser'
+      preLoaderRoute: typeof OrganiserRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/claim/$token': {
@@ -158,8 +218,11 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
   AuthRoute: AuthRoute,
   BookingsRoute: BookingsRoute,
+  MailboxRoute: MailboxRoute,
+  OrganiserRoute: OrganiserRoute,
   ClaimTokenRoute: ClaimTokenRoute,
   EventsEventIdRoute: EventsEventIdRoute,
   ApiPublicHooksFlushEmailsRoute: ApiPublicHooksFlushEmailsRoute,
