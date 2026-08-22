@@ -56,7 +56,10 @@ function BookingsPage() {
 
   async function cancel(id: string) {
     const { error } = await supabase.rpc("cancel_booking", { p_booking_id: id });
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     toast.success("Booking cancelled — freed seats are offered to the waitlist automatically.");
     void qc.invalidateQueries({ queryKey: ["my-bookings", user?.id] });
   }

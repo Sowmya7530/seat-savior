@@ -11,6 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as BookingsRouteImport } from './routes/bookings'
+import { Route as ClaimTokenRouteImport } from './routes/claim.$token'
+import { Route as EventsEventIdRouteImport } from './routes/events.$eventId'
 import { Route as ApiPublicHooksFlushEmailsRouteImport } from './routes/api/public/hooks/flush-emails'
 
 const IndexRoute = IndexRouteImport.update({
@@ -23,6 +26,21 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BookingsRoute = BookingsRouteImport.update({
+  id: '/bookings',
+  path: '/bookings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClaimTokenRoute = ClaimTokenRouteImport.update({
+  id: '/claim/$token',
+  path: '/claim/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventsEventIdRoute = EventsEventIdRouteImport.update({
+  id: '/events/$eventId',
+  path: '/events/$eventId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicHooksFlushEmailsRoute =
   ApiPublicHooksFlushEmailsRouteImport.update({
     id: '/api/public/hooks/flush-emails',
@@ -33,30 +51,61 @@ const ApiPublicHooksFlushEmailsRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/bookings': typeof BookingsRoute
+  '/claim/$token': typeof ClaimTokenRoute
+  '/events/$eventId': typeof EventsEventIdRoute
   '/api/public/hooks/flush-emails': typeof ApiPublicHooksFlushEmailsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/bookings': typeof BookingsRoute
+  '/claim/$token': typeof ClaimTokenRoute
+  '/events/$eventId': typeof EventsEventIdRoute
   '/api/public/hooks/flush-emails': typeof ApiPublicHooksFlushEmailsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/bookings': typeof BookingsRoute
+  '/claim/$token': typeof ClaimTokenRoute
+  '/events/$eventId': typeof EventsEventIdRoute
   '/api/public/hooks/flush-emails': typeof ApiPublicHooksFlushEmailsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/api/public/hooks/flush-emails'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/bookings'
+    | '/claim/$token'
+    | '/events/$eventId'
+    | '/api/public/hooks/flush-emails'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/api/public/hooks/flush-emails'
-  id: '__root__' | '/' | '/auth' | '/api/public/hooks/flush-emails'
+  to:
+    | '/'
+    | '/auth'
+    | '/bookings'
+    | '/claim/$token'
+    | '/events/$eventId'
+    | '/api/public/hooks/flush-emails'
+  id:
+    | '__root__'
+    | '/'
+    | '/auth'
+    | '/bookings'
+    | '/claim/$token'
+    | '/events/$eventId'
+    | '/api/public/hooks/flush-emails'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
+  BookingsRoute: typeof BookingsRoute
+  ClaimTokenRoute: typeof ClaimTokenRoute
+  EventsEventIdRoute: typeof EventsEventIdRoute
   ApiPublicHooksFlushEmailsRoute: typeof ApiPublicHooksFlushEmailsRoute
 }
 
@@ -76,6 +125,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/bookings': {
+      id: '/bookings'
+      path: '/bookings'
+      fullPath: '/bookings'
+      preLoaderRoute: typeof BookingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/claim/$token': {
+      id: '/claim/$token'
+      path: '/claim/$token'
+      fullPath: '/claim/$token'
+      preLoaderRoute: typeof ClaimTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/events/$eventId': {
+      id: '/events/$eventId'
+      path: '/events/$eventId'
+      fullPath: '/events/$eventId'
+      preLoaderRoute: typeof EventsEventIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/hooks/flush-emails': {
       id: '/api/public/hooks/flush-emails'
       path: '/api/public/hooks/flush-emails'
@@ -89,6 +159,9 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
+  BookingsRoute: BookingsRoute,
+  ClaimTokenRoute: ClaimTokenRoute,
+  EventsEventIdRoute: EventsEventIdRoute,
   ApiPublicHooksFlushEmailsRoute: ApiPublicHooksFlushEmailsRoute,
 }
 export const routeTree = rootRouteImport

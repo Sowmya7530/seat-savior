@@ -240,7 +240,10 @@ function EventPage() {
       return;
     }
     const { error } = await supabase.rpc("join_waitlist", { p_event_id: eventId, p_category: category });
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     toast.success(`You're on the ${category} waitlist. We'll email you the moment a seat frees up.`);
     void qc.invalidateQueries({ queryKey: ["waitlist", eventId, user.id] });
   }
