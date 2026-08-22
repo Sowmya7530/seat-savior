@@ -48,7 +48,10 @@ function AuthPage() {
     setBusy(true);
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     await afterAuth();
   }
 
@@ -61,7 +64,10 @@ function AuthPage() {
       options: { emailRedirectTo: window.location.origin, data: { full_name: fullName, role } },
     });
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     if (!data.session) {
       toast.success("Check your email to confirm your account, then sign in.");
       return;

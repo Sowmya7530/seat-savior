@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ApiPublicHooksFlushEmailsRouteImport } from './routes/api/public/hooks/flush-emails'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicHooksFlushEmailsRoute =
@@ -26,27 +32,31 @@ const ApiPublicHooksFlushEmailsRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/api/public/hooks/flush-emails': typeof ApiPublicHooksFlushEmailsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/api/public/hooks/flush-emails': typeof ApiPublicHooksFlushEmailsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/api/public/hooks/flush-emails': typeof ApiPublicHooksFlushEmailsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/public/hooks/flush-emails'
+  fullPaths: '/' | '/auth' | '/api/public/hooks/flush-emails'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/public/hooks/flush-emails'
-  id: '__root__' | '/' | '/api/public/hooks/flush-emails'
+  to: '/' | '/auth' | '/api/public/hooks/flush-emails'
+  id: '__root__' | '/' | '/auth' | '/api/public/hooks/flush-emails'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
   ApiPublicHooksFlushEmailsRoute: typeof ApiPublicHooksFlushEmailsRoute
 }
 
@@ -57,6 +67,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/hooks/flush-emails': {
@@ -71,6 +88,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
   ApiPublicHooksFlushEmailsRoute: ApiPublicHooksFlushEmailsRoute,
 }
 export const routeTree = rootRouteImport
