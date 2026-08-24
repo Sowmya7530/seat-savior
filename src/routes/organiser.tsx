@@ -99,9 +99,7 @@ function OrganiserPage() {
       price: Number(prices[c] ?? 0),
     }));
     if (rows.length) await supabase.from("event_prices").insert(rows);
-    const { error: seatErr } = await supabase.functions.invoke("noop").catch(() => ({ error: null }));
-    void seatErr;
-    // seat map generation runs through the database helper
+    // seat map is generated from the venue layout
     await supabase.rpc("create_show_seats", { p_event_id: ev.id });
     setBusy(false);
     setTitle("");
